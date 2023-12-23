@@ -4,10 +4,10 @@ const NavBar = () => {
   const navOptions = (
     <>
       <li>
-        <Link to="/menu">Our Menu</Link>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <Link to="/">Home</Link>
+        <Link to="/menu">Our Menu</Link>
       </li>
 
       <li>
