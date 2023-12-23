@@ -13,7 +13,12 @@ const Cover = ({ img, title }) => {
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md">
             <h1 className="mb-5 text-5xl font-bold uppercase">{title}</h1>
-            <p className="mb-5">Menu Menu</p>
+            <p className="mb-5">
+              "Savor the flavor of innovation – where every click on our
+              restaurant website opens the door to a culinary journey that
+              transcends taste, blending technology and gastronomy for an
+              unforgettable dining experience."
+            </p>
           </div>
         </div>
       </div>
