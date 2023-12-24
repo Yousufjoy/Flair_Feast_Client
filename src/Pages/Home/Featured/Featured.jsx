@@ -21,7 +21,7 @@ const Featured = () => {
           </p>
 
           <button className="btn btn-outline border-0 border-b-4 mt-4">
-            Ghost
+            Order Now
           </button>
         </div>
       </div>
