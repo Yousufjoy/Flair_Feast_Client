@@ -19,6 +19,7 @@ const TestiMonials = () => {
   }, []);
 
   const { name, details, rating } = reviwes;
+  console.log(name)
   return (
     <section className=" my-20">
       <SectionTitle
