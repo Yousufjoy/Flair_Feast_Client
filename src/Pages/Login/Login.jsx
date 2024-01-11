@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2'
 
 import {
   loadCaptchaEnginge,
@@ -12,6 +13,7 @@ import { Helmet } from "react-helmet";
 const Login = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
+  const [errorMessage,setErrorMessage] = useState(null);
 
   const { signIn } = useContext(AuthContext);
 
@@ -28,16 +30,35 @@ const Login = () => {
       const user = result.user;
       console.log(user);
     });
+    signIn(email,password)
+    .then(result=> console.log(result.user))
+    .catch(error => setErrorMessage(error));
+   
   };
+
 
   const handleValidateCaptcha = () => {
     const value = captchaRef.current.value;
 
     if (validateCaptcha(value) == true) {
-      alert("Captcha Matched");
+      // alert("Captcha Matched");
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Captcha Matched",
+        showConfirmButton: false,
+        timer: 1500
+      });
       setDisabled(false);
     } else {
-      alert("Captcha Does Not Match");
+      // alert("Captcha Does Not Match");
+      Swal.fire({
+        icon: "error",
+        title: "Captcha did not Match!!",
+        text: "Something went wrong!",
+        footer: '<a href="#">Give Correct Captcha.</a>'
+      });
+      setDisabled(true);
     }
   };
 
@@ -114,11 +135,13 @@ const Login = () => {
                   value="Login"
                 />
               </div>
+          
             </form>
+            {errorMessage && <p className="text-red-300">{errorMessage.message}</p>}
             <p>
-              {" "}
-              <small> New Here </small>{" "}
-              <Link to="/signup"> Create an account</Link>{" "}
+            
+              <small> New Here </small>
+              <Link to="/signup"> Create an account</Link>
             </p>
           </div>
         </div>
