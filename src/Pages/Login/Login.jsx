@@ -1,47 +1,55 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import Swal from 'sweetalert2'
-
-import {
-  loadCaptchaEnginge,
-  LoadCanvasTemplate,
-  validateCaptcha,
-} from "react-simple-captcha";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2';
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from "react-simple-captcha";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 const Login = () => {
   const captchaRef = useRef(null);
   const [disabled, setDisabled] = useState(true);
-  const [errorMessage,setErrorMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const { signIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
 
-  const hanldeLogin = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    signIn(email, password).then((result) => {
-      const user = result.user;
-      console.log(user);
-    });
-    signIn(email,password)
-    .then(result=> console.log(result.user))
-    .catch(error => setErrorMessage(error));
-   
-  };
+    const captchaValue = captchaRef.current.value;
 
+    if (!validateCaptcha(captchaValue)) {
+      // If captcha validation fails, show an error
+      Swal.fire({
+        icon: "error",
+        title: "Captcha did not Match!!",
+        text: "Something went wrong!",
+        footer: '<a href="#">Give Correct Captcha.</a>'
+      });
+      setDisabled(true);
+      return;
+    }
+
+    signIn(email, password)
+      .then((result) => {
+        navigate("/");
+        Swal.fire("Logged in successfully!");
+      })
+      .catch((error) => {
+        setErrorMessage(error);
+      });
+  };
 
   const handleValidateCaptcha = () => {
     const value = captchaRef.current.value;
 
-    if (validateCaptcha(value) == true) {
-      // alert("Captcha Matched");
+    if (validateCaptcha(value)) {
       Swal.fire({
         position: "top",
         icon: "success",
@@ -51,7 +59,6 @@ const Login = () => {
       });
       setDisabled(false);
     } else {
-      // alert("Captcha Does Not Match");
       Swal.fire({
         icon: "error",
         title: "Captcha did not Match!!",
@@ -78,7 +85,7 @@ const Login = () => {
             </p>
           </div>
           <div className="card md:w-1/2 shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form onSubmit={hanldeLogin} className="card-body">
+            <form onSubmit={handleLogin} className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -123,6 +130,7 @@ const Login = () => {
                 <button
                   onClick={handleValidateCaptcha}
                   className=" btn btn-outline btn-xs mt-2"
+                  type="button"
                 >
                   Validate
                 </button>
@@ -135,12 +143,10 @@ const Login = () => {
                   value="Login"
                 />
               </div>
-          
             </form>
             {errorMessage && <p className="text-red-300">{errorMessage.message}</p>}
             <p>
-            
-              <small> New Here </small>
+              <small>New Here</small>
               <Link to="/signup"> Create an account</Link>
             </p>
           </div>
