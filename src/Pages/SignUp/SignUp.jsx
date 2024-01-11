@@ -35,14 +35,14 @@ const SignUp = () => {
                   <span className="label-text">Name</span>
                 </label>
                 <input
-                  type="name"
+                  type="text"
                   {...register("name",{ required: true })}
                   name="name"
                   placeholder="name"
                   className="input input-bordered"
-                  required
+              
                 />
-                {errors.name && <span>This field is required</span>}
+                {errors.name && <span className="text-red-600" >This field is required</span>}
               </div>
               <div className="form-control">
               <label className="label">
@@ -50,12 +50,13 @@ const SignUp = () => {
               </label>
               <input
                 type="email"
-                {...register("email")}
+                {...register("email",{ required: true })}
                 name="email"
                 placeholder="email"
                 className="input input-bordered"
-                required
+               
               />
+              {errors.email && <span className="text-red-600" >This field is required</span>}
             </div>
               <div className="form-control">
                 <label className="label">
@@ -63,12 +64,13 @@ const SignUp = () => {
                 </label>
                 <input
                   type="password"
-                  {...register("password")}
+                  {...register("password",{ required: true, minLength: 6, maxLength: 20 })}
                   name="password"
                   placeholder="password"
-                  className="input input-bordered"
-                  required
+                  className="input input-bordered "
+                 
                 />
+                {errors.password && <span className="text-red-600">Pssword is required</span>}
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
