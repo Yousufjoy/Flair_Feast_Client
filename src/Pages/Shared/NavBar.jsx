@@ -32,6 +32,17 @@ const NavBar = () => {
           <li>
             <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
           </li>
+          <li>
+          <p> {user.displayName}</p>
+        </li>
+        <li>
+        <img
+        className="w-[100px] h-[70px] rounded-md"
+        referrerPolicy="no-referrer"
+        src={user.photoURL}
+        alt=""
+      />
+      </li>
         </>
       ) : (
         <>
