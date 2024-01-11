@@ -1,8 +1,23 @@
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 
+
 const SignUp = () => {
-    return (
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = data =>{
+    console.log("The data",data);
+  }
+ 
+   
+  
+  return (
         <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col md:flex-row-reverse">
           <div className="text-center md:w-1/2lg:text-left">
@@ -14,18 +29,20 @@ const SignUp = () => {
             </p>
           </div>
           <div className="card md:w-1/2 shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-            <form className="card-body">
+            <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Name</span>
                 </label>
                 <input
                   type="name"
+                  {...register("name",{ required: true })}
                   name="name"
                   placeholder="name"
                   className="input input-bordered"
                   required
                 />
+                {errors.name && <span>This field is required</span>}
               </div>
               <div className="form-control">
               <label className="label">
@@ -33,6 +50,7 @@ const SignUp = () => {
               </label>
               <input
                 type="email"
+                {...register("email")}
                 name="email"
                 placeholder="email"
                 className="input input-bordered"
@@ -45,6 +63,7 @@ const SignUp = () => {
                 </label>
                 <input
                   type="password"
+                  {...register("password")}
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
