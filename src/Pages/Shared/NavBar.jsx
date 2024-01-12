@@ -1,15 +1,15 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-
+import { FaShoppingCart } from "react-icons/fa";
 const NavBar = () => {
   const { user, logOut } = useContext(AuthContext);
 
-  const handleLogOut = ()=>{
+  const handleLogOut = () => {
     logOut()
-    .then(()=>{})
-    .catch (error => console.log(error));
-  }
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
 
   const navOptions = (
     <>
@@ -24,25 +24,35 @@ const NavBar = () => {
         <Link to="/order/salad">Order Food </Link>
       </li>
       <li>
-      <Link to="/secret">Secret</Link>
-    </li>
+        <Link to="/secret">Secret</Link>
+      </li>
+      <li>
+        <Link>
+          <button className="btn bg-red-200 py-4">
+           +0
+           <FaShoppingCart />
+          </button>
+        </Link>
+      </li>
 
       {user ? (
         <>
           <li>
-            <button onClick={handleLogOut} className="btn btn-ghost">Log Out</button>
+            <button onClick={handleLogOut} className="btn btn-ghost">
+              Log Out
+            </button>
           </li>
           <li>
-          <p> {user.displayName}</p>
-        </li>
-        <li>
-        <img
-        className="w-[100px] h-[70px] rounded-md"
-        referrerPolicy="no-referrer"
-        src={user.photoURL}
-        alt=""
-      />
-      </li>
+            <p> {user.displayName}</p>
+          </li>
+          <li>
+            <img
+              className="w-[100px] h-[70px] rounded-md"
+              referrerPolicy="no-referrer"
+              src={user.photoURL}
+              alt=""
+            />
+          </li>
         </>
       ) : (
         <>
@@ -77,7 +87,7 @@ const NavBar = () => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+              className=" text-black menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
             >
               {navOptions}
             </ul>
