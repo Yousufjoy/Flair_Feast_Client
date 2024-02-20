@@ -1,8 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import Swal from 'sweetalert2';
-import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from "react-simple-captcha";
+import  { useContext, useEffect, useRef, useState } from "react";
+import Swal from "sweetalert2";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import { Helmet } from "react-helmet";
 
 const Login = () => {
@@ -13,6 +17,7 @@ const Login = () => {
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
 
+ 
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -30,13 +35,14 @@ const Login = () => {
         icon: "error",
         title: "Captcha did not Match!!",
         text: "Something went wrong!",
-        footer: '<a href="#">Give Correct Captcha.</a>'
+        footer: '<a href="#">Give Correct Captcha.</a>',
       });
       setDisabled(true);
       return;
     }
 
     signIn(email, password)
+      // eslint-disable-next-line no-unused-vars
       .then((result) => {
         navigate("/");
         Swal.fire("Logged in successfully!");
@@ -55,7 +61,7 @@ const Login = () => {
         icon: "success",
         title: "Captcha Matched",
         showConfirmButton: false,
-        timer: 1500
+        timer: 1500,
       });
       setDisabled(false);
     } else {
@@ -63,7 +69,7 @@ const Login = () => {
         icon: "error",
         title: "Captcha did not Match!!",
         text: "Something went wrong!",
-        footer: '<a href="#">Give Correct Captcha.</a>'
+        footer: '<a href="#">Give Correct Captcha.</a>',
       });
       setDisabled(true);
     }
@@ -144,7 +150,9 @@ const Login = () => {
                 />
               </div>
             </form>
-            {errorMessage && <p className="text-red-300">{errorMessage.message}</p>}
+            {errorMessage && (
+              <p className="text-red-300">{errorMessage.message}</p>
+            )}
             <p>
               <small>New Here</small>
               <Link to="/signup"> Create an account</Link>

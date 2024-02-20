@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const useMenu = () => {
   const [menu, setMenu] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
