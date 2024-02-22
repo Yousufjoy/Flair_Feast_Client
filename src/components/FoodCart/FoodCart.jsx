@@ -1,11 +1,9 @@
 import useAuth from "./../../hooks/useAuth";
 import Swal from "sweetalert2";
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
-import useAxiosSecure from './../../hooks/useAxiosSecure';
-
-
-
+import useAxiosSecure from "./../../hooks/useAxiosSecure";
+import useCart from "./../../hooks/useCart";
 
 const FoodCart = ({ item }) => {
   const { name, recipe, image, price, _id } = item;
@@ -13,27 +11,28 @@ const FoodCart = ({ item }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecure();
-  
+  const [, refetch] = useCart();
 
   // eslint-disable-next-line no-unused-vars
   const handleAddtToCart = (food) => {
     if (user && user.email) {
       // TODO: Send cart item to database
-      console.log(user.email);
-      const cartItem ={
+      // console.log(user.email);
+      const cartItem = {
         menuID: _id,
         email: user.email,
         name,
         image,
-        price
-      }
-      axiosSecure.post("/carts",cartItem)
-      .then(res=>{
-        console.log(res.data)
-        if(res.data.insertedId){
+        price,
+      };
+      axiosSecure.post("/carts", cartItem).then((res) => {
+        // console.log(res.data);
+        if (res.data.insertedId) {
           alert(`${name} has been added to your Cart!`);
         }
-      })
+        // refetch the cart to update the cart items counts
+        refetch();
+      });
     } else {
       Swal.fire({
         title: "You are not logged in",
@@ -46,7 +45,7 @@ const FoodCart = ({ item }) => {
       }).then((result) => {
         if (result.isConfirmed) {
           //send the user to the login page
-          navigate("/login",{state:{from: location}});
+          navigate("/login", { state: { from: location } });
         }
       });
     }
