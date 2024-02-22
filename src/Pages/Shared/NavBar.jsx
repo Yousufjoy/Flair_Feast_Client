@@ -28,7 +28,7 @@ const NavBar = () => {
         <Link to="/secret">Secret</Link>
       </li>
       <li>
-        <Link>
+        <Link to="/dashboard/cart">
           <button className="btn bg-red-200 py-4">
             +{cart.length}
             <FaShoppingCart />
