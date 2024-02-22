@@ -5,6 +5,7 @@ import {
   FaCalendar,
   FaAd,
   FaList,
+  FaSearch
 } from "react-icons/fa";
 
 const Dashboard = () => {
@@ -38,9 +39,20 @@ const Dashboard = () => {
               <FaList></FaList>My Bookings
             </NavLink>
           </li>
+          <div className="divider"></div>
+          <li>
+            <NavLink to="/">
+              <FaHome></FaHome>Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/">
+              <FaSearch></FaSearch>Menu
+            </NavLink>
+          </li>
         </ul>
       </div>
-      <div className="flex1">
+      <div className="p-8 flex-1">
         <Outlet></Outlet>
       </div>
     </div>
