@@ -1,7 +1,10 @@
 import useAuth from "./../../hooks/useAuth";
 import Swal from "sweetalert2";
 import { useNavigate,useLocation } from "react-router-dom";
-import axios from 'axios';
+
+import useAxiosSecure from './../../hooks/useAxiosSecure';
+
+
 
 
 const FoodCart = ({ item }) => {
@@ -9,6 +12,8 @@ const FoodCart = ({ item }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
+  
 
   // eslint-disable-next-line no-unused-vars
   const handleAddtToCart = (food) => {
@@ -22,7 +27,7 @@ const FoodCart = ({ item }) => {
         image,
         price
       }
-      axios.post("http://localhost:5000/carts",cartItem)
+      axiosSecure.post("/carts",cartItem)
       .then(res=>{
         console.log(res.data)
         if(res.data.insertedId){
